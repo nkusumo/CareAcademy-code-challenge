@@ -3,25 +3,30 @@ class CoursesController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
+    # Read the JSON data for all courses
     def index
         courses = Course.all
         render json: courses
     end
 
+    # Read the JSON data for a specific course using an ID
     def show
         render json: @course
     end
 
+    # Create a course with a name and release date
     def create
         course = Course.create!(course_params)
         render json: course, status: :created
     end
 
+    # Update a specific course using an ID
     def update
         @course.update!(course_params)
         render json: @course
     end
 
+    # Delete a specific course using an ID
     def destroy
         @course.destroy
         render json: {}
